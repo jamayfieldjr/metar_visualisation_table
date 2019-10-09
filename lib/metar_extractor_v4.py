@@ -9,7 +9,15 @@ from fractions import Fraction
 from speci_group import speci_group_function
 from collections import OrderedDict
 
-def METAR_EXTRACT(content01,content02):
+
+class METAR_EXTRACT(object)
+    def __init__(self, taf):
+        if isinstance(taf, TAF):
+            self._taf = taf
+        else:
+            raise DecodeError("Argument is not a METAR parser object")
+                    
+                 
     def speci_group_function():
         """ 
         Function IDs SPECI and ROUTINUE METARs
