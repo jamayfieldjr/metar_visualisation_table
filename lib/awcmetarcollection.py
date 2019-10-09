@@ -1,9 +1,7 @@
 """ Libaries and Modules """
 import re
-from datetime import datetime,timedelta
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from TAF_range_time import TAF_time_range_function
 
 def metar_collector(ICAO,hours):
     """ICAO == KMEM, EHAM, etc., HH = hours you want to look at """
