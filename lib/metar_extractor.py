@@ -6,11 +6,11 @@ from datetime import datetime
 import pandas as pd
 from metar import Metar
 from fractions import Fraction
-from speci_group import speci_group_function
 from collections import OrderedDict
 
 
-class METAR_EXTRACT(object)
+class metar_extractor(object)
+
     def __init__(self, taf):
         if isinstance(taf, TAF):
             self._taf = taf
@@ -58,13 +58,8 @@ class METAR_EXTRACT(object)
             mm = values[14:16]
             #print(YYYY,MM,DD,hh,mm)
             #print(datetime(int(YYYY), int(MM), int(DD),int(hh),int(mm)).strftime('%Y-%m-%d %H:%M'))
-            time_array.append(datetime(int(YYYY), int(MM), int(DD),int(hh),int(mm)).strftime('%Y-%m-%d %H:%M'))
-
-    
+            time_array.append(datetime(int(YYYY), int(MM), int(DD),int(hh),int(mm)).strftime('%Y-%m-%d %H:%M'))    
         return(time_array)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED time_group_function')
 
     def visibility_group_function():
         """
@@ -126,9 +121,6 @@ class METAR_EXTRACT(object)
       
         return(visibility_array)
 
-#    print('===========>')
-#    print('=========================>METAR COMPLETED visibility_group_function')
-
     def time_range_function(): 
         time_array=time_group_function(content02)     
         time_array = time_array[0:len(time_array)-1] 
@@ -146,10 +138,6 @@ class METAR_EXTRACT(object)
             ds.append(res)
 
         return(ds)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED time_range_function')
-
 
     def clouds_group_function():
         """
@@ -200,9 +188,6 @@ class METAR_EXTRACT(object)
             cloudstf = []
 
         return(clouds_array)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED clouds_group_function')
 
     def present_wx_group_function():
         """
@@ -255,12 +240,7 @@ class METAR_EXTRACT(object)
             weathertf = []
 
         return(present_wx)
-    
-#    print('===========>')
-#    print('=========================>METAR COMPLETED present_wx_function')
-    #print(present_wx_group_function())
 
-   # Obscuration
     def present_wx_group_function_2():
         dumby01=[]
         dumby02=[]
@@ -278,10 +258,6 @@ class METAR_EXTRACT(object)
 
         return(dumby02)
 
-#    print('===========>')
-#    print('=========================>METAR COMPLETED present_wx_function')
-    #print(present_wx_group_function_2())
-
     def visibility_obscuration_function():
         dumby01 =[]
         present_wx = present_wx_group_function()
@@ -296,10 +272,6 @@ class METAR_EXTRACT(object)
                 dumby01.append(obscuration_string)
     
         return(dumby01)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED visibility_obscuration_function')
-    #print(visibility_obscuration_function())
 
     def lowest_cloud_group_function():
         clouds=clouds_group_function()
@@ -345,9 +317,6 @@ class METAR_EXTRACT(object)
             lowest = [lowest_cloud_height, lowest_cloud_layer] 
 
         return(lowest)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED lowest_cloud_group_function')
 
     def wind_group_function():
         """
@@ -402,13 +371,11 @@ class METAR_EXTRACT(object)
         
         return(wind_array)
 
-    #p = wind_group_function()
-    #print(p[2])
-#    print('===========>')
-#    print('=========================>METAR COMPLETED wind_group_function')
-
-
     def flight_cat_function():
+        """
+        Function built for to Output Flight Cat]
+        Output : VFR, MVFR, IFR, MVFR, VFR  
+        """
         cloud_array = lowest_cloud_group_function()
         cloud_array = cloud_array[0]
         visibility_array = visibility_group_function()    
@@ -428,18 +395,12 @@ class METAR_EXTRACT(object)
             flt_cat.append(res)
         return(flt_cat)    
 
-#    print('===========>')
-#    print('=========================>METAR COMPLETED flight_cat_function')
-
     def icao_get_function():
         icao = []
         for values in content01:
             taf = pytaf.TAF(values)
             icao.append(taf._taf_header["icao_code"])
         return(icao)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED icao_get_function')
 
     def build_table():
         wind_array = wind_group_function()
@@ -467,10 +428,5 @@ class METAR_EXTRACT(object)
         dmov = pd.DataFrame({'Vis Obc':vis_obscur_wx_array})
         result = pd.concat([dmicao,dms,dmtime,dmdt,dmwd,dmws,dmwg,dmfc,dmvis,dmch,dmcl,dmwx,dmov], axis=1, sort=False)
         return(result)
-
-#    print('===========>')
-#    print('=========================>METAR COMPLETED build_table')
-
-    print('METAR JOB METAR COMPLETED')
 
     return(build_table())
