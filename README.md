@@ -1,9 +1,8 @@
 # metar_visualisation_table
 Visualization of Aviation Surface Observations (METARs) on a data frame table 
 
-
 Syntax: 
 
-metar_viz(ICAO,Year,Month,Day,Hours) i.e. Amount of Hours
+metar_visualisation_table(ICAO,Hours) i.e. Amount of Hours collected from the Aviation Weather Center Text DataBase 
 
-metar_viz(KMEM,2019,01,01,24) i.e 24 hours
+metar_visualisation_table(KMEM,24) i.e 24 hours
