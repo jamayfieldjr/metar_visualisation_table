@@ -1,2 +1,3 @@
 import re
-from .metar_extractor_v4, import METAR_EXTRACT
+from .metar_extractor, import metar_extract
+from .awcmetarcollection, import metar_collector
